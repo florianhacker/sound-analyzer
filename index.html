@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+	
+	<head>
+		<title>Soundanalzyer</title>
+		
+		<style> 
+			body {
+				background-color: #000000;
+				margin:0;
+			    padding:0;
+			    border:0;
+			    outline:0;
+			}
+			canvas {
+				background-color: #fff;
+			}
+		</style>
+		
+	</head>
+	
+	<body onLoad='init();'>
+		<canvas></canvas>
+		
+		<script src="js/SoundAnalyzer.js"></script>
+		<script src="js/CanvasAnimator.js"></script>
+
+		<script>
+			var CANVAS_WIDTH = window.innerWidth;
+			var CANVAS_HEIGHT = window.innerHeight;
+			
+			var soundAnalyzer;
+			var canvasAnimator;
+				
+			function init(){
+				var canvas = document.getElementsByTagName( 'canvas' )[0];
+				canvas.width = CANVAS_WIDTH; 
+				canvas.height = CANVAS_HEIGHT;
+							
+			 	soundAnalyzer = new SoundAnalyzer();
+			
+			 	canvasAnimator = new CanvasAnimator( canvas, soundAnalyzer.getSoundSpectrum() );
+			
+			//	audio.addEventListener("songStarted", onSongStarted);
+				
+				setInterval(onInterval, 1000/30)
+			}
+			
+			function onSongStarted()
+			{
+				console.log("onSongStarted");
+			}
+			
+			function onInterval()
+			{
+				soundAnalyzer.analyze();
+				canvasAnimator.draw();
+			}
+				
+		</script>
+	</body>
+	
+</html>
